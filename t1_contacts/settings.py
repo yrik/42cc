@@ -1,4 +1,10 @@
 # Django settings for t1_contacts project.
+import os
+import django
+# calculated paths for django and the site
+# used as starting points for various other paths
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -78,6 +84,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 't1_contacts.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(SITE_ROOT, 'templates')
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -93,3 +100,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
 )
+FIXTURE_DIRS = (
+    os.path.join(SITE_ROOT, 'core/fixtures/')
+)
+

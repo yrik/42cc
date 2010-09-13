@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import *
-from models import index
+from core.views import index
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
     # Example:
-     (r'/index', index),
+     (r'', index),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
