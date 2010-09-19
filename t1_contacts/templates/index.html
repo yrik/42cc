@@ -1,0 +1,12 @@
+<html>
+<head>
+<title>Ticket 1</title>
+</head>
+<body>
+    {% for name, value in p.get_fields %}
+        {% if value %}
+            {{ name }} => {{ value }} <br/>
+        {% endif %}
+    {% endfor %}
+
+</body>

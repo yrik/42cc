@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "core.person", "fields": {"bio": "my bio", "surname": "Kriachko", "name": "Iurii", "contacts": "phone:093 762 5 172"}}]
