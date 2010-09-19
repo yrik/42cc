@@ -4,8 +4,10 @@
 </head>
 <body>
 <a href="/add_person">all persons/add person</a>
+<a href="/edit_person">edit person</a>
 <a href="/">main</a>
 <br/><br/>
+
 {% for p in items %}
     {% for name, value in p.get_fields %}
         {% if value %}
@@ -14,13 +16,5 @@
     {% endfor %}
 <hr/>
 {% endfor %}
-
-{% if form  %}
-<hr/>
-<form action="/add_person/" method="post">
-{{ form.as_p }}
-<input type="submit" value="Save person" />
-{% csrf_token %}
-</form>
-{% endif %}
+{% block form %}{%endblock%}
 </body>

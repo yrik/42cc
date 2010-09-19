@@ -29,4 +29,4 @@ class PersonForm(forms.Form):
         surname = forms.CharField(required=False)
         bio = forms.CharField(required=False,widget=forms.Textarea)
         contacts = forms.CharField(required=False,widget=forms.Textarea)
-
+        id = forms.CharField()
