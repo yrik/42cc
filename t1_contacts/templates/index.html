@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Simple app</title>
+</head>
+<body>
+<a href="/add_person">all persons/add person</a>
+<a href="/">main</a>
+<br/><br/>
+{% for p in items %}
+    {% for name, value in p.get_fields %}
+        {% if value %}
+            {{ name }} => {{ value }} <br/>
+        {% endif %}
+    {% endfor %}
+<hr/>
+{% endfor %}
+
+{% if form  %}
+<hr/>
+<form action="/add_person/" method="post">
+{{ form.as_p }}
+<input type="submit" value="Save person" />
+{% csrf_token %}
+</form>
+{% endif %}
+</body>

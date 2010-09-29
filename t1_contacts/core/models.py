@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 class Person(models.Model):
     """
@@ -21,4 +22,11 @@ class Person(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Person._meta.fields]
+
+
+class PersonForm(forms.Form):
+        name = forms.CharField()
+        surname = forms.CharField(required=False)
+        bio = forms.CharField(required=False,widget=forms.Textarea)
+        contacts = forms.CharField(required=False,widget=forms.Textarea)
 
