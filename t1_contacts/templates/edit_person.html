@@ -2,6 +2,8 @@
 
 {% block form %} 
 {% if form  %}
+{% block form %}
+{% if form %}
 <hr/>
 <form action="/edit_person/" method="post">
 {{ form.as_p }}
