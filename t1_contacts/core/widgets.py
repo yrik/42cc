@@ -1,6 +1,9 @@
+from django.utils.encoding import force_unicode
+from django.conf import settings
 from django import forms
-from django.utils.safestring import mark_safe
 import datetime, time
+from django.utils.safestring import mark_safe
+
 
 
 calbtn = u'''<img src="/static/images/cal.png" alt="calendar" id="%s_btn" 

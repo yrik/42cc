@@ -62,7 +62,7 @@ def add_person(request):
     else:
         form = PersonForm() # An unbound form
 
-    return render_to_response('index.html', {
+    return render_to_response('add_person.html', {
         'form': form,
         'items':items,
     },
