@@ -98,7 +98,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'core'
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
 )
 FIXTURE_DIRS = (
     os.path.join(SITE_ROOT, 'core/fixtures/')
