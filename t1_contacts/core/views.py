@@ -17,6 +17,23 @@ def index(request):
     p = Person.objects.filter(id=1,name="Iurii", surname="Kriachko")
     return render_to_response('index.html',{'items':p})
 
+def settings(request):
+
+    """
+    >>> from django.test import Client
+    >>> from django.core.urlresolver import reverse
+    >>> client = Client()
+
+    >>> response = client.get('/settings')
+    >>> response.status_code
+    200
+    """
+
+    return render_to_response('context.html', context_instance=RequestContext(request))
+
+
+
+
 def add_person(request):
 
     """

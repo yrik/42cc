@@ -3,18 +3,27 @@
 <title>Simple app</title>
 </head>
 <body>
+{% block links %}
 <a href="/add_person">all persons/add person</a>
 <a href="/edit_person">edit person</a>
+<a href="/settings">view settings</a>
 <a href="/">main</a>
 <br/><br/>
+{% endblock%}
 
+{% block content %}
+
+{% block items %}
 {% for p in items %}
     {% for name, value in p.get_fields %}
         {% if value %}
             {{ name }} => {{ value }} <br/>
         {% endif %}
     {% endfor %}
-<hr/>
 {% endfor %}
+<hr/>
+{% endblock%}
+
 {% block form %}{%endblock%}
+{% endblock%}
 </body>
