@@ -1,39 +1,38 @@
+# -*- coding: utf-8 -*-
+# utils/widgets.py
+
+'''
+DateTimeWidget using JSCal2 from http://www.dynarch.com/projects/calendar/
+'''
+
 from django.utils.encoding import force_unicode
 from django.conf import settings
 from django import forms
 import datetime, time
 from django.utils.safestring import mark_safe
 
-
-
-calbtn = u'''<img src="/static/images/cal.png" alt="calendar" id="%s_btn" 
-style="cursor: pointer; width: 18px; height:18px; vertical-align:middle; float: none;" title="Select date" />
+# DATETIMEWIDGET
+calbtn = u'''<img src="%smedia/admin/img/admin/icon_calendar.gif" alt="calendar" id="%s_btn" style="cursor: pointer;" title="Select date" />
 <script type="text/javascript">
-    function onJalaliDateSelected(calendar, date) {
-        var e = document.getElementById("%s");
-        var str = calendar.date.getFullYear() + "-" + (calendar.date.getMonth() + 1) + "-" + calendar.date.getDate();
-        e.value = str;
-    }
     Calendar.setup({
-        inputField     :    "%s_display",   
-        button         :    "%s_btn",
-        ifFormat       :    "%s",
-        dateType       :    "jalali",
-        weekNumbers    :     false,
-        onUpdate       :     onJalaliDateSelected
+        inputField     :    "%s",
+        dateFormat     :    "%s",
+        trigger        :    "%s_btn"
     });
 </script>'''
 
 class DateTimeWidget(forms.widgets.TextInput):
     class Media:
         css = {
-            'all': ('/static/styles/jscalendar/skins/calendar-system.css',)
+            'all': (
+                    '/static/calendar/css/jscal2.css',
+                    '/static/calendar/css/border-radius.css',
+                    '/static/calendar/css/win2k/win2k.css',
+                    )
         }
         js = (
-              '/static/js/jscalendar/jalali.js',
-              '/static/js/jscalendar/calendar.js',
-              '/static/js/jscalendar/calendar-setup.js',
-              '/static/js/jscalendar/lang/calendar-en.js',
+              '/static/calendar/js/jscal2.js',
+              '/static/calendar/js/lang/ru.js',
         )
 
     dformat = '%Y-%m-%d'
@@ -52,9 +51,8 @@ class DateTimeWidget(forms.widgets.TextInput):
         id = final_attrs['id']
 
         jsdformat = self.dformat #.replace('%', '%%')
-        cal = calbtn % (id, id, id, id, jsdformat)
-        parsed_atts = forms.util.flatatt(final_attrs)
-        a = u'<span><input type="text" id="%s_display" /><input type="hidden" %s/> %s%s</span>' % (id, parsed_atts, self.media, cal)
+        cal = calbtn % (settings.MEDIA_URL, id, id, jsdformat, id)
+        a = u'<input%s />%s%s' % (forms.util.flatatt(final_attrs), self.media, cal)
         return mark_safe(a)
 
     def value_from_datadict(self, data, files, name):
@@ -96,5 +94,6 @@ class DateTimeWidget(forms.widgets.TextInput):
         except:
             if force_unicode(initial_value) != force_unicode(data_value):
                 return True
+
         return False
 

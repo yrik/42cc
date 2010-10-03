@@ -55,7 +55,7 @@ def add_person(request):
     if request.method == 'POST': # If the form has been submitted...
         form = PersonForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
-            newPerson = Person(name=form.cleaned_data['name'],bio=form.cleaned_data['bio'],contacts=form.cleaned_data['contacts'],surname=form.cleaned_data['surname'])
+            newPerson = Person(name=form.cleaned_data['name'],bio=form.cleaned_data['bio'],contacts=form.cleaned_data['contacts'],surname=form.cleaned_data['surname'],birth_date=form.cleaned_data['birth_date'])
             newPerson.save()
 
             return HttpResponseRedirect('/') # Redirect after POST
@@ -96,12 +96,13 @@ def edit_person(request):
             p.bio=form.cleaned_data['bio']
             p.contacts=form.cleaned_data['contacts']
             p.surname=form.cleaned_data['surname']
+            p.birth_date=form.cleaned_data['birth_date']
             p.save()
 
             return HttpResponseRedirect('/') # Redirect after POST
     else:
         p = Person.objects.get(name="Iurii", surname="Kriachko",id=1)
-        form = PersonForm({'id':p.id,'name':p.name,'surname':p.surname,'bio':p.bio,'contacts':p.contacts})
+        form = PersonForm({'id':p.id,'name':p.name,'surname':p.surname,'bio':p.bio,'contacts':p.contacts,'birth_date':p.birth_date})
 
     return render_to_response('edit_person.html', {
         'form': form,
