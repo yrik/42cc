@@ -20,7 +20,7 @@ class Person(models.Model):
     surname = models.CharField(null=True ,max_length=250)
     bio = models.TextField(null=True ,max_length=250)
     contacts = models.TextField(null=True ,max_length=250)
-    birth_date = models.TextField(null=True, max_length=200)
+    birth_date = models.DateField(null=True, blank=True )
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Person._meta.fields]
