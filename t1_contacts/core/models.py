@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
 from core.widgets import DateTimeWidget
+import datetime
 
 class Person(models.Model):
     """
@@ -31,5 +32,5 @@ class PersonForm(forms.Form):
         surname = forms.CharField(required=False)
         bio = forms.CharField(required=False,widget=forms.Textarea)
         contacts = forms.CharField(required=False,widget=forms.Textarea)
-        birth_date = forms.CharField(required=False, widget=DateTimeWidget)
+        birth_date = forms.DateField(initial=datetime.date.today,required=False, widget=DateTimeWidget)
         id = forms.CharField()
