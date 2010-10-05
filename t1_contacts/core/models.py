@@ -28,9 +28,9 @@ class Person(models.Model):
 
 
 class PersonForm(forms.Form):
+        id = forms.CharField()
+        birth_date = forms.DateField(initial=datetime.date.today,required=False, widget=DateTimeWidget)
         name = forms.CharField()
         surname = forms.CharField(required=False)
         bio = forms.CharField(required=False,widget=forms.Textarea)
         contacts = forms.CharField(required=False,widget=forms.Textarea)
-        birth_date = forms.DateField(initial=datetime.date.today,required=False, widget=DateTimeWidget)
-        id = forms.CharField()
