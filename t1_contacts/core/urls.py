@@ -10,6 +10,7 @@ urlpatterns = patterns('',
      (r'add_person/', add_person),
      (r'edit_person/', edit_person),
      (r'settings/', settings),
+     (r'first10items/', first10items),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

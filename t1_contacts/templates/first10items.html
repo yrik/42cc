@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+ {% block content %}
+ 
+ {% block items %}
+ {% for p in items %}
+     {% for name, value in p.get_fields %}
+         {% if value %}
+             {{ name }} => {{ value }} <br/>
+         {% endif %}
+     {% endfor %}
+ {% endfor %}
+ <hr/>
+ {% endblock%}
+{% endblock %}
