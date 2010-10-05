@@ -17,6 +17,22 @@ def index(request):
     p = Person.objects.filter(id=1,name="Iurii", surname="Kriachko")
     return render_to_response('index.html',{'items':p})
 
+def first10items(request):
+
+    """
+    >>> from django.test import Client
+    >>> from django.core.urlresolver import reverse
+    >>> client = Client()
+
+    >>> response = client.get('/first10items')
+    >>> response.status_code
+    200
+    """
+
+    p = Person.objects.all()[:5]
+    return render_to_response('first10items.html',{'items':p})
+
+
 def settings(request):
 
     """
