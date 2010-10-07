@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from core.models import Person, PersonForm
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+
 def index(request):
 
     """
@@ -85,7 +87,7 @@ def add_person(request):
      context_instance=RequestContext(request),
     )
 
-
+@login_required
 def edit_person(request):
 
     """
