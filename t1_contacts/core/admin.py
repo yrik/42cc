@@ -1,4 +1,4 @@
-from core.models import Person,Log
+from core.models import * 
 from django.contrib import admin
 
 admin.site.register(Person)
