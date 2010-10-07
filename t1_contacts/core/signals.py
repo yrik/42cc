@@ -13,5 +13,5 @@ def save_callback(sender, instance, signal, *args, **kwargs):
             Log.content="object '%s' is edited" % instance
     Log.save()
     
-post_save(save_callback)
-post_delete(delete_callback)
+post_save.connect(save_callback)
+post_delete.connect(delete_callback)
