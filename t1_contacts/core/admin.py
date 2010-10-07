@@ -1,6 +1,7 @@
-from core.models import Person,Log
+from core.models import * 
 from django.contrib import admin
 
 admin.site.register(Person)
 admin.site.register(Log)
+admin.site.register(RequestLog)
 

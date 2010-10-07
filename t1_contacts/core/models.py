@@ -2,7 +2,29 @@ from django.db import models
 from django import forms
 from core.widgets import DateTimeWidget
 import datetime
+from django.db.models.signals import post_save, post_delete
+from django.core.signals import request_started
 
+
+class RequestLog(models.Model):
+    """
+    RequestLog item
+    # New item
+    >>> i = Log(content="content")
+    >>> i.content
+    'content'
+    """
+    PC = (
+        (0,'low'),
+        (1,'normal'),
+        (2,'high'),
+    )
+    content = models.TextField(null=True,blank=True )
+    priority = models.IntegerField(choices=PC, default=0)
+
+    def __unicode__(self):
+        return '%d %s' % (self.priority, self.content)
+ 
 class Log(models.Model):
     """
     Log item
@@ -59,12 +81,11 @@ class PersonForm(forms.Form):
 
 
 
+def request_callback(sender, *args, **kwargs):
+    content =''
+    r = RequestLog(content=sender)
+    r.save()
 
-#signal catching
-from django.db.models.signals import post_save, post_delete
-#from django.dispatch import receiver
-from core.models import Log 
- 
 def delete_callback(sender, instance, signal, *args, **kwargs):
     l=Log(content="object '%s' is deleted" % instance)
     Log.save(l)
@@ -79,3 +100,4 @@ def save_callback(sender, instance, signal, *args, **kwargs):
          
 post_save.connect(save_callback)
 post_delete.connect(delete_callback)
+request_started.connect(request_callback)
