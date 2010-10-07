@@ -3,6 +3,19 @@ from django import forms
 from core.widgets import DateTimeWidget
 import datetime
 
+class Log(models.Model):
+    """
+    Log item
+    # New item
+    >>> i = Log(content="content")
+    >>> i.content
+    'content'
+    """
+    content = models.TextField(null=True,blank=True )
+    
+    def __unicode__(self):
+        return self.content
+ 
 class Person(models.Model):
     """
     Person with properties
@@ -25,7 +38,9 @@ class Person(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Person._meta.fields]
-
+    
+    def __unicode__(self):
+        return self.name+' '+self.surname
 
 class PersonForm(forms.Form):
         id = forms.CharField()
@@ -34,3 +49,22 @@ class PersonForm(forms.Form):
         surname = forms.CharField(required=False)
         bio = forms.CharField(required=False,widget=forms.Textarea)
         contacts = forms.CharField(required=False,widget=forms.Textarea)
+
+from django.db.models.signals import post_save, post_delete
+#from django.dispatch import receiver
+from core.models import Log 
+ 
+def delete_callback(sender, instance, signal, *args, **kwargs):
+    l=Log(content="object '%s' is deleted" % instance)
+    Log.save(l)
+         
+def save_callback(sender, instance, signal, *args, **kwargs):
+    if sender != Log :
+        if kwargs.get('created', True):
+            l=Log(content="object '%s' is created" % instance)
+        else:
+            l=Log(content="object '%s' is edited" % instance)
+        Log.save(l)
+         
+post_save.connect(save_callback)
+post_delete.connect(delete_callback)
