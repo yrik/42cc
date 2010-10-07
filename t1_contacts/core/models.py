@@ -3,6 +3,17 @@ from django import forms
 from core.widgets import DateTimeWidget
 import datetime
 
+class Log(models.Model):
+    """
+    Log item
+    # New item
+    >>> i = Log(content="content")
+    >>> i.content
+    'content'
+    """
+    content = models.TextField(null=True,blank=True )
+
+ 
 class Person(models.Model):
     """
     Person with properties
