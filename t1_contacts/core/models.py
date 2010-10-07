@@ -12,7 +12,9 @@ class Log(models.Model):
     'content'
     """
     content = models.TextField(null=True,blank=True )
-
+    
+    def __unicode__(self):
+        return self.content
  
 class Person(models.Model):
     """
@@ -36,7 +38,9 @@ class Person(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Person._meta.fields]
-
+    
+    def __unicode__(self):
+        return self.name+' '+self.surname
 
 class PersonForm(forms.Form):
         id = forms.CharField()
@@ -55,11 +59,12 @@ def delete_callback(sender, instance, signal, *args, **kwargs):
     Log.save(l)
          
 def save_callback(sender, instance, signal, *args, **kwargs):
-    l=Log(content="object '%s' is created" % instance)
-    if 'created' not in kwargs:
-        if not kwargs['created']:
-            l.content="object '%s' is edited" % instance
-    Log.save(l)
+    if sender != Log :
+        if kwargs.get('created', True):
+            l=Log(content="object '%s' is created" % instance)
+        else:
+            l=Log(content="object '%s' is edited" % instance)
+        Log.save(l)
          
 post_save.connect(save_callback)
 post_delete.connect(delete_callback)
