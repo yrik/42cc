@@ -45,3 +45,21 @@ class PersonForm(forms.Form):
         surname = forms.CharField(required=False)
         bio = forms.CharField(required=False,widget=forms.Textarea)
         contacts = forms.CharField(required=False,widget=forms.Textarea)
+
+from django.db.models.signals import post_save, post_delete
+#from django.dispatch import receiver
+from core.models import Log 
+ 
+def delete_callback(sender, instance, signal, *args, **kwargs):
+    l=Log(content="object '%s' is deleted" % instance)
+    Log.save(l)
+         
+def save_callback(sender, instance, signal, *args, **kwargs):
+    l=Log(content="object '%s' is created" % instance)
+    if 'created' not in kwargs:
+        if not kwargs['created']:
+            l.content="object '%s' is edited" % instance
+    Log.save(l)
+         
+post_save.connect(save_callback)
+post_delete.connect(delete_callback)
