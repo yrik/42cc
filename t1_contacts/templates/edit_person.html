@@ -3,7 +3,8 @@
 {% block form %} 
 {% if form  %}
 <hr/>
-<form action="/edit_person/" method="post">
+{{ form.media }} 
+<form action="/edit_person/" id="edit_person" name="edit_person"  method="post">
 {{ form.as_p }}
 <input type="submit" value="Save person" />
 {% csrf_token %}

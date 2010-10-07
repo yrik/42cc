@@ -49,7 +49,18 @@ class PersonForm(forms.Form):
         surname = forms.CharField(required=False)
         bio = forms.CharField(required=False,widget=forms.Textarea)
         contacts = forms.CharField(required=False,widget=forms.Textarea)
+        
+        class Media:
+            js = (
+                '/static/js/jquery-1.4.2.min.js',
+                '/static/js/jquery.form.js',
+                '/static/js/custom.js',
+            )
 
+
+
+
+#signal catching
 from django.db.models.signals import post_save, post_delete
 #from django.dispatch import receiver
 from core.models import Log 
