@@ -3,5 +3,4 @@ from django.contrib import admin
 
 admin.site.register(Person)
 admin.site.register(Log)
-admin.site.register(RequestLog)
 

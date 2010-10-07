@@ -6,9 +6,9 @@ from django.db.models.signals import post_save, post_delete
 from django.core.signals import request_started
 
 
-class RequestLog(models.Model):
+class Log(models.Model):
     """
-    RequestLog item
+    #Log item
     # New item
     >>> i = Log(content="content")
     >>> i.content
@@ -24,20 +24,7 @@ class RequestLog(models.Model):
 
     def __unicode__(self):
         return '%d %s' % (self.priority, self.content)
- 
-class Log(models.Model):
-    """
-    Log item
-    # New item
-    >>> i = Log(content="content")
-    >>> i.content
-    'content'
-    """
-    content = models.TextField(null=True,blank=True )
-    
-    def __unicode__(self):
-        return self.content
- 
+
 class Person(models.Model):
     """
     Person with properties
@@ -80,12 +67,6 @@ class PersonForm(forms.Form):
             )
 
 
-
-def request_callback(sender, *args, **kwargs):
-    content =''
-    r = RequestLog(content=sender)
-    r.save()
-
 def delete_callback(sender, instance, signal, *args, **kwargs):
     l=Log(content="object '%s' is deleted" % instance)
     Log.save(l)
@@ -100,4 +81,3 @@ def save_callback(sender, instance, signal, *args, **kwargs):
          
 post_save.connect(save_callback)
 post_delete.connect(delete_callback)
-request_started.connect(request_callback)
