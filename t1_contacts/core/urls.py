@@ -11,10 +11,11 @@ urlpatterns = patterns('',
      (r'edit_person/', edit_person),
      (r'settings/', settings),
      (r'first10items/', first10items),
-     (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+     (r'^accounts/login/$', 'django.contrib.auth.views.login',
+                                        {'template_name': 'login.html'}),
 
 
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
