@@ -8,11 +8,14 @@ DateTimeWidget using JSCal2 from http://www.dynarch.com/projects/calendar/
 from django.utils.encoding import force_unicode
 from django.conf import settings
 from django import forms
-import datetime, time
+import datetime
+import time
 from django.utils.safestring import mark_safe
 
 # DATETIMEWIDGET
-calbtn = u'''<img src="%smedia/admin/img/admin/icon_calendar.gif" alt="calendar" id="%s_btn" style="cursor: pointer;" title="Select date" />
+calbtn = u'''<img src="%smedia/admin/img/admin/icon_calendar.gif"
+                        alt="calendar" id="%s_btn" style="cursor: pointer;"
+                                             title="Select date" />
 <script type="text/javascript">
     Calendar.setup({
         inputField     :    "%s",
@@ -20,6 +23,7 @@ calbtn = u'''<img src="%smedia/admin/img/admin/icon_calendar.gif" alt="calendar"
         trigger        :    "%s_btn"
     });
 </script>'''
+
 
 class DateTimeWidget(forms.widgets.TextInput):
     class Media:
@@ -36,8 +40,10 @@ class DateTimeWidget(forms.widgets.TextInput):
         )
 
     dformat = '%Y-%m-%d'
+
     def render(self, name, value, attrs=None):
-        if value is None: value = ''
+        if value is None:
+            value = ''
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
         if value != '':
             try:
@@ -50,9 +56,10 @@ class DateTimeWidget(forms.widgets.TextInput):
             final_attrs['id'] = u'%s_id' % (name)
         id = final_attrs['id']
 
-        jsdformat = self.dformat #.replace('%', '%%')
+        jsdformat = self.dformat  # .replace('%', '%%')
         cal = calbtn % (settings.MEDIA_URL, id, id, jsdformat, id)
-        a = u'<input%s />%s%s' % (forms.util.flatatt(final_attrs), self.media, cal)
+        a = u'<input%s />%s%s' % (forms.util.flatatt(final_attrs),\
+                                self.media, cal)
         return mark_safe(a)
 
     def value_from_datadict(self, data, files, name):
@@ -76,7 +83,8 @@ class DateTimeWidget(forms.widgets.TextInput):
     def _has_changed(self, initial, data):
         """
         Return True if data differs from initial.
-        Copy of parent's method, but modify value with strftime function before final comparsion
+        Copy of parent's method,
+        but modify value with strftime function before final comparsion
         """
         if data is None:
             data_value = u''
@@ -89,11 +97,11 @@ class DateTimeWidget(forms.widgets.TextInput):
             initial_value = initial
 
         try:
-            if force_unicode(initial_value.strftime(self.dformat)) != force_unicode(data_value.strftime(self.dformat)):
+            if force_unicode(initial_value.strftime(self.dformat)) \
+                != force_unicode(data_value.strftime(self.dformat)):
                 return True
         except:
             if force_unicode(initial_value) != force_unicode(data_value):
                 return True
 
         return False
-
