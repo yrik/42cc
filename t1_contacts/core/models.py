@@ -19,6 +19,8 @@ class Log(models.Model):
         (2, 'high'),
     )
     content = models.TextField(null=True, blank=True)
+    date = models.DateTimeFieldField(null=True, blank=True, auto_now=True)
+    content = models.TextField(null=True, blank=True)
     priority = models.IntegerField(choices=PC, default=0)
 
     def __unicode__(self):
@@ -56,7 +58,7 @@ class Person(models.Model):
 
 def delete_callback(sender, instance, signal, *args, **kwargs):
     l = Log(content="object '%s' is deleted" % instance)
-    Log.save(l)
+    l.save()
 
 
 def save_callback(sender, instance, signal, *args, **kwargs):
@@ -65,7 +67,7 @@ def save_callback(sender, instance, signal, *args, **kwargs):
             l = Log(content="object '%s' is created" % instance)
         else:
             l = Log(content="object '%s' is edited" % instance)
-        Log.save(l)
+        l.save()
 
 
 post_save.connect(save_callback)
