@@ -8,10 +8,10 @@ class PersonForm(forms.Form):
         id = forms.CharField()
         birth_date = forms.DateField(initial=datetime.date.today, \
                     required=False, widget=DateTimeWidget)
-        name = forms.CharField()
-        surname = forms.CharField(required=False)
-        bio = forms.CharField(required=False, widget=forms.Textarea)
         contacts = forms.CharField(required=False, widget=forms.Textarea)
+        bio = forms.CharField(required=False, widget=forms.Textarea)
+        surname = forms.CharField(required=False)
+        name = forms.CharField()
 
         class Media:
             js = (
