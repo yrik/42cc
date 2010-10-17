@@ -5,6 +5,12 @@ from django.core.signals import request_started
 from core.forms import PersonForm
 
 
+class Http(models.Model):
+    content = models.TextField(null=True, blank=True)
+    
+    def  __unicode__(self):
+        return self.content
+
 class Log(models.Model):
     """
     #Log item
