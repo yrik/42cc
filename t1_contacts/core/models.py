@@ -6,10 +6,19 @@ from core.forms import PersonForm
 
 
 class Http(models.Model):
-    content = models.TextField(null=True, blank=True)
+    path = models.TextField(null=True, blank=True)
+    method =  models.TextField(null=True, blank=True)
+    user = models.TextField(null=True, blank=True)
+    POST = models.TextField(null=True, blank=True)
+    GET = models.TextField(null=True, blank=True)
+    META = models.TextField(null=True, blank=True)
     
+
     def  __unicode__(self):
-        return self.content
+        s = ''
+        for field in self._meta.fields:
+            s += "%s:%s;" % (field.name, field.value_to_string(self))
+        return s
 
 class Log(models.Model):
     """
