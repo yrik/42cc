@@ -19,12 +19,11 @@ class Log(models.Model):
         (2, 'high'),
     )
     content = models.TextField(null=True, blank=True)
-    date = models.DateTimeFieldField(null=True, blank=True, auto_now=True)
-    content = models.TextField(null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True, auto_now=True)
     priority = models.IntegerField(choices=PC, default=0)
 
     def __unicode__(self):
-        return '%d %s' % (self.priority, self.content)
+        return '%d %s in %s' % (self.priority, self.content, self.date)
 
 
 class Person(models.Model):
