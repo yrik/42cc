@@ -19,25 +19,32 @@ $(document).ready(function(){
 
     $("#form form").ajaxForm(options)
 
-function processJson( data) { 
-    if (data) {
-        if (eval(data.bad)) {
-            errors = eval(data.errs);
-            $.each(errors, function(fieldname,errmsg)
-            {
-                id = "#id_" + fieldname;
-                $(id).parent().before( errmsg );
-                });
-            $("#form textarea, select, input").attr('disabled','')
+ function processJson( data) { 
+     if (data) {
+         $('.errors').remove()
+         if (eval(data.bad)) {
+             errors = eval(data.errs);
+             $.each(errors, function(fieldname,errmsg)
+             {   
+                 id = "#id_" + fieldname;
+                 iderr =  "id_" + fieldname + '_errror';
+                 console.log(iderr)
+ 
+                 if ($('#' + iderr).length == 0){ 
+                     $(id).parent().after($("<div class='errors' id='"+iderr+"'></div>"));    
+                 }   
+                 $('#'+iderr).html( errmsg );
+                 console.log(errmsg)
+             })  
+             $("#form textarea, select, input").attr('disabled','')
+ 
+         }else{
+             $("#form form").clearForm();
+             alert('operation is complited')
+         }   
+     } else {
+         alert("Ajax error : no data received. ")
+     }   
+ })
+    
 
-        }else{
-            $("#form form").clearForm();
-            alert('operation is complited')
-        }
-    } else {
-        alert("Ajax error : no data received. ")
-    }
-}
-   
-
-})
