@@ -6,8 +6,17 @@ from core.forms import PersonForm
 
 
 class Http(models.Model):
+    """
+    #Http item
+    # New item
+    >>> i = Http(path="path", user="user")
+    >>> i.path
+    'path'
+    >>> i.user
+    'user'
+    """
     path = models.TextField(null=True, blank=True)
-    method =  models.TextField(null=True, blank=True)
+    method = models.TextField(null=True, blank=True)
     user = models.TextField(null=True, blank=True)
     POST = models.TextField(null=True, blank=True)
     GET = models.TextField(null=True, blank=True)
