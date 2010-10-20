@@ -14,10 +14,15 @@ class Http(models.Model):
     META = models.TextField(null=True, blank=True)
     
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self))\
+        for field in self._meta.fields]
+
+
     def  __unicode__(self):
         s = ''
         for field in self._meta.fields:
-            s += "%s:%s;" % (field.name, field.value_to_string(self))
+            s += "%s:%s;" % (field.name, field.value_to_string(self)[:50])
         return s
 
 class Log(models.Model):
@@ -64,7 +69,7 @@ class Person(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self))\
-        for field in Person._meta.fields]
+        for field in self._meta.fields]
 
     def __unicode__(self):
         return self.name + ' ' + self.surname

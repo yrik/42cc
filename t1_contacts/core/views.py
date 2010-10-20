@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from core.models import Person, PersonForm
+from core.models import Person, PersonForm, Http
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson
@@ -46,8 +46,10 @@ def first10items(request):
     >>> response.status_code
     200
     """
-
-    p = Person.objects.all()[:5]
+    try:
+        p = Http.objects.all()[:10]
+    except:
+        p =  None
     return render_to_response('first10items.html', {'items': p})
 
 
