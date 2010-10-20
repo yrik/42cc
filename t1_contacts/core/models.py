@@ -5,6 +5,21 @@ from django.core.signals import request_started
 from core.forms import PersonForm
 
 
+class Http(models.Model):
+    path = models.TextField(null=True, blank=True)
+    method =  models.TextField(null=True, blank=True)
+    user = models.TextField(null=True, blank=True)
+    POST = models.TextField(null=True, blank=True)
+    GET = models.TextField(null=True, blank=True)
+    META = models.TextField(null=True, blank=True)
+    
+
+    def  __unicode__(self):
+        s = ''
+        for field in self._meta.fields:
+            s += "%s:%s;" % (field.name, field.value_to_string(self))
+        return s
+
 class Log(models.Model):
     """
     #Log item

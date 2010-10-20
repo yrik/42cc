@@ -45,6 +45,5 @@ $(document).ready(function(){
      } else {
          alert("Ajax error : no data received. ")
      }   
+ }
  })
-    
-
