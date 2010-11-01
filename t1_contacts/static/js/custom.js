@@ -40,6 +40,7 @@ $(document).ready(function(){
  
          }else{
              $("#form form").clearForm();
+             $('#edit_person').populate(data.data)
              alert('operation is complited')
          }   
      } else {

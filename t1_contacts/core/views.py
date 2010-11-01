@@ -18,7 +18,7 @@ def index(request):
     200
     """
 
-    p = Person.objects.filter(id=1, name="Iurii", surname="Kriachko")
+    p = Person.objects.filter(pk=1)
     return render_to_response('index.html', {'items': p})
 
 
@@ -152,19 +152,22 @@ def edit_person(request):
 
         if request.is_ajax():
             rdict = {'bad': 'false'}
+            data = form.data
+            rdict.update({'data': data})
             if not form.is_valid():
                 rdict.update({'bad': 'true'})
                 d = {}
                 for e in form.errors.iteritems():
                     d.update({e[0]: unicode(e[1])})
                 rdict.update({'errs': d})
+
             json = simplejson.dumps(rdict, ensure_ascii=False)
             return HttpResponse(json, mimetype='application/javascript')
         else:
             return HttpResponseRedirect('/')  # Redirect after POST
     else:
         try:
-            p = Person.objects.get(name="Iurii", surname="Kriachko", id=1)
+            p = Person.objects.get(pk=1)
             form = PersonForm({
                 'id': p.id,
                 'name': p.name,
@@ -175,6 +178,20 @@ def edit_person(request):
                 })
         except:
             return HttpResponseRedirect('/')
+
+        if request.is_ajax():
+            rdict = {'bad': 'false'}
+            data = form
+            rdict.update({'data': data})
+            if not form.is_valid():
+                rdict.update({'bad': 'true'})
+                d = {}
+                for e in form.errors.iteritems():
+                    d.update({e[0]: unicode(e[1])})
+                rdict.update({'errs': d})
+
+            json = simplejson.dumps(rdict, ensure_ascii=False)
+            return HttpResponse(json, mimetype='application/javascript')
 
     return render_to_response('edit_person.html', {
         'form': form,
