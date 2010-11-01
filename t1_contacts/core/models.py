@@ -15,13 +15,21 @@ class Http(models.Model):
     >>> i.user
     'user'
     """
+    PC = (
+        (0, 'low'),
+        (1, 'normal'),
+        (2, 'high'),
+    )
+    date = models.DateTimeField(null=True, blank=True, auto_now=True)
+    priority = models.IntegerField(choices=PC, default=0)
+
+
     path = models.TextField(null=True, blank=True)
     method = models.TextField(null=True, blank=True)
     user = models.TextField(null=True, blank=True)
     POST = models.TextField(null=True, blank=True)
     GET = models.TextField(null=True, blank=True)
     META = models.TextField(null=True, blank=True)
-    
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self))\
